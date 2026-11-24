@@ -3,12 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFF8F1">
 <title>&#x306d;&#x3093;&#x306d;&#x306e;&#x670d;&#x30ca;&#x30d3;</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#FFFFFF; --surface:#F2F2F2; --line:#D9D9D9; --text:#000000; --sub:#595959;
-  --accent:#0033CC; --accent-strong:#002699; --accent-soft:#C2D1FF; --on-accent:#FFFFFF;
-  --warn:#FF0000; --layer1:#C2D1FF; --layer2:#85A3FF; --layer3:#0033CC; --layer4:#002699;
+  --bg:#FFF8F1; --card:#FFFFFF; --card2:#FFF1E6; --line:#F1DFD2; --text:#4A3B35; --sub:#8C7B70;
+  --accent:#D9624F; --accent-soft:#FFE1DA; --on-accent:#FFFFFF; --warn:#D9473A; --shadow:0 6px 18px rgba(217,98,79,.12);
+  --scene:#FFEFE3; --star:#F7C873;
   color-scheme:light;
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px);
@@ -16,135 +20,172 @@
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --bg:#0D0D0D; --surface:#262626; --line:#404040; --text:#F2F2F2; --sub:#A6A6A6;
-    --accent:#85A3FF; --accent-strong:#C2D1FF; --accent-soft:#262626; --on-accent:#000000;
-    --warn:#FF0000; --layer1:#404040; --layer2:#002699; --layer3:#0033CC; --layer4:#85A3FF;
+    --bg:#1C2140; --card:#262C52; --card2:#2E3560; --line:#3A4272; --text:#F6EFE8; --sub:#B9B3D1;
+    --accent:#FFB3A1; --accent-soft:#3A3F6E; --on-accent:#2A2440; --warn:#FF8A75; --shadow:0 6px 18px rgba(0,0,0,.28);
+    --scene:#2E3560; --star:#FFE08A;
     color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#0D0D0D; --surface:#262626; --line:#404040; --text:#F2F2F2; --sub:#A6A6A6;
-  --accent:#85A3FF; --accent-strong:#C2D1FF; --accent-soft:#262626; --on-accent:#000000;
-  --warn:#FF0000; --layer1:#404040; --layer2:#002699; --layer3:#0033CC; --layer4:#85A3FF;
+  --bg:#1C2140; --card:#262C52; --card2:#2E3560; --line:#3A4272; --text:#F6EFE8; --sub:#B9B3D1;
+  --accent:#FFB3A1; --accent-soft:#3A3F6E; --on-accent:#2A2440; --warn:#FF8A75; --shadow:0 6px 18px rgba(0,0,0,.28);
+  --scene:#2E3560; --star:#FFE08A;
   color-scheme:dark;
 }
 *,*::before,*::after{box-sizing:inherit}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--bg);color:var(--text);
-  font-family:Arial,"MS PGothic",sans-serif;font-size:16px;line-height:1.6;
-  -webkit-text-size-adjust:100%}
+  font-family:"Zen Maru Gothic","Hiragino Maru Gothic ProN","Hiragino Sans",Arial,"MS PGothic",sans-serif;
+  font-weight:500;font-size:16px;line-height:1.65;-webkit-text-size-adjust:100%}
 main{max-width:30rem;margin:0 auto;padding:1rem 1rem 3rem}
-h1{font-size:1.25rem;margin:.25rem 0 0;letter-spacing:.02em}
-.lead{color:var(--sub);font-size:.875rem;margin:.25rem 0 1.25rem}
-fieldset{border:0;margin:0 0 1.25rem;padding:0}
-legend,.label{font-weight:bold;font-size:.9375rem;margin-bottom:.5rem;padding:0}
-.hint{color:var(--sub);font-size:.8125rem;margin:.25rem 0 0}
 
-/* \5ba4 \6e29 \ff1a \3053 \306e \30a2 \30d7 \30ea \306e \4e3b \5f79  */
-.temp{background:var(--surface);border-radius:1rem;padding:1rem}
-.temp-row{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
-.temp-value{font-size:3.5rem;font-weight:bold;line-height:1;font-variant-numeric:tabular-nums}
-.temp-value small{font-size:1.25rem;font-weight:normal;margin-left:.125rem}
-.band{font-size:.875rem;color:var(--sub);margin-top:.25rem}
-input[type=range]{width:100%;margin:1rem 0 .25rem;accent-color:var(--accent);height:2rem}
-.scale{display:flex;justify-content:space-between;font-size:.75rem;color:var(--sub)}
+/* \30d8 \30c3 \30c0 \30fc  */
+header{display:flex;align-items:center;gap:.75rem;margin:.25rem 0 1rem}
+header svg{flex:none}
+h1{font-size:1.5rem;font-weight:900;margin:0;letter-spacing:.04em}
+.lead{color:var(--sub);font-size:.8125rem;margin:0;line-height:1.5}
 
-.step{display:flex;align-items:center;gap:.5rem}
-.step button{width:2.75rem;height:2.75rem;border-radius:50%;border:1px solid var(--line);
-  background:var(--bg);color:var(--text);font-size:1.25rem;font-family:inherit;cursor:pointer}
-.step output{min-width:7.5rem;text-align:center;font-size:1.25rem;font-weight:bold}
+/* \30ab \30fc \30c9  */
+.card{background:var(--card);border-radius:1.5rem;padding:1rem 1.125rem;margin:0 0 .875rem;box-shadow:var(--shadow);border:0}
+.card legend{float:left;width:100%;padding:0;margin-bottom:.625rem;font-weight:700;font-size:.9375rem;display:flex;align-items:center;gap:.375rem}
+.card legend + *{clear:both}
+.ico{font-size:1.125rem;line-height:1}
+.hint{color:var(--sub);font-size:.75rem;margin:.5rem 0 0;line-height:1.5}
 
+/* \6708 \9f62  */
+.age{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+.round{width:3rem;height:3rem;border-radius:50%;border:0;background:var(--accent-soft);color:var(--accent);
+  font-size:1.5rem;font-weight:900;font-family:inherit;cursor:pointer;line-height:1}
+.round:active{transform:scale(.94)}
+.age output{flex:1;text-align:center;font-size:1.5rem;font-weight:900}
+
+/* \5ba4 \6e29  */
+.temp-head{display:flex;align-items:flex-end;justify-content:space-between;gap:.5rem}
+.temp-value{font-size:3.75rem;font-weight:900;line-height:1;font-variant-numeric:tabular-nums;font-family:Arial,sans-serif;transition:color .3s}
+.temp-value small{font-size:1.25rem;margin-left:.125rem;font-family:"Zen Maru Gothic",sans-serif}
+.band{display:inline-block;margin-top:.5rem;font-size:.8125rem;font-weight:700;padding:.125rem .625rem;border-radius:999px;background:var(--card2)}
+.c0{color:#5B9BD5}.c1{color:#6FA8DC}.c2{color:#5FAE7E}.c3{color:#E8954A}.c4{color:#D9473A}
+.temp-btns{display:flex;gap:.5rem}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:2.25rem;margin:.75rem 0 0;background:transparent;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:.75rem;border-radius:999px;
+  background:linear-gradient(90deg,#9CCBEB 0%,#BFE6C8 40%,#FFD59A 75%,#F59A86 100%)}
+input[type=range]::-moz-range-track{height:.75rem;border-radius:999px;
+  background:linear-gradient(90deg,#9CCBEB 0%,#BFE6C8 40%,#FFD59A 75%,#F59A86 100%)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:1.75rem;height:1.75rem;margin-top:-.5rem;border-radius:50%;
+  background:#FFFFFF;border:3px solid var(--accent);box-shadow:0 2px 6px rgba(0,0,0,.18)}
+input[type=range]::-moz-range-thumb{width:1.5rem;height:1.5rem;border-radius:50%;background:#FFFFFF;border:3px solid var(--accent)}
+.scale{display:flex;justify-content:space-between;font-size:.6875rem;color:var(--sub);font-family:Arial,sans-serif}
+
+/* \9078 \629e \30dc \30bf \30f3  */
 .seg{display:flex;flex-wrap:wrap;gap:.5rem}
 .seg label{flex:1 1 auto;position:relative}
 .seg input{position:absolute;opacity:0;pointer-events:none}
-.seg span{display:block;text-align:center;padding:.625rem .5rem;border:1px solid var(--line);
-  border-radius:.5rem;font-size:.9375rem;cursor:pointer;background:var(--bg)}
-.seg input:checked+span{background:var(--accent);border-color:var(--accent);color:var(--on-accent);font-weight:bold}
-.seg input:focus-visible+span,.step button:focus-visible,input[type=range]:focus-visible{outline:3px solid var(--accent-strong);outline-offset:2px}
+.seg span{display:block;text-align:center;padding:.625rem .75rem;border-radius:999px;font-size:.9375rem;font-weight:700;
+  cursor:pointer;background:var(--card2);color:var(--text);transition:background .2s,color .2s,transform .1s}
+.seg input:checked+span{background:var(--accent);color:var(--on-accent)}
+.seg label:active span{transform:scale(.97)}
+.seg input:focus-visible+span,.round:focus-visible,input[type=range]:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 
 /* \7d50 \679c  */
-#result{border-top:2px solid var(--text);padding-top:1rem;margin-top:.5rem}
-#result h2{font-size:1.0625rem;margin:0 0 .75rem}
-.stack{display:flex;flex-direction:column-reverse;gap:3px;margin:0 0 1rem}
-.layer{border-radius:.5rem;padding:.625rem .875rem;font-weight:bold;display:flex;justify-content:space-between;gap:.5rem}
-.layer small{font-weight:normal;font-size:.8125rem}
-.l0{background:var(--layer1);color:var(--text)}
-.l1{background:var(--layer2);color:#FFFFFF}
-.l2{background:var(--layer3);color:#FFFFFF}
-.l3{background:var(--layer4);color:var(--bg)}
-.top-layer{border:2px dashed var(--accent);background:transparent;color:var(--text)}
-.change{border-left:4px solid var(--warn);background:var(--surface);padding:.75rem;border-radius:0 .5rem .5rem 0;margin-bottom:1rem}
-.change strong{color:var(--warn)}
-.note{background:var(--surface);padding:.75rem;border-radius:.5rem;margin-bottom:1rem;font-size:.9375rem}
-.check{border:1px solid var(--accent);border-radius:.5rem;padding:.75rem;margin-bottom:1rem}
+#result{margin-top:1.25rem}
+.scene{background:var(--scene);border-radius:1.5rem;padding:.75rem .75rem .25rem;text-align:center;position:relative;overflow:hidden}
+.scene svg{width:100%;max-width:17rem;height:auto;display:block;margin:0 auto}
+.res-title{font-size:1.0625rem;font-weight:900;margin:.875rem 0 .625rem;text-align:center}
+.stack{display:flex;flex-direction:column;gap:.375rem;margin:0 0 .875rem;padding:0;list-style:none}
+.stack li{display:flex;align-items:center;gap:.625rem;background:var(--card);border-radius:1rem;padding:.625rem .875rem;box-shadow:var(--shadow);font-weight:700}
+.stack .num{flex:none;width:1.5rem;height:1.5rem;border-radius:50%;display:grid;place-items:center;font-size:.75rem;font-family:Arial,sans-serif;background:var(--card2);color:var(--sub)}
+.stack .dot{flex:none;width:1.25rem;height:1.25rem;border-radius:.375rem;border:1.5px solid #C9B8AA}
+.stack .tag{margin-left:auto;font-size:.6875rem;font-weight:700;color:var(--accent);background:var(--accent-soft);padding:.125rem .5rem;border-radius:999px;white-space:nowrap}
+.stack .top{border:2px dashed var(--accent);box-shadow:none;background:transparent}
+.alert{background:var(--card);border-radius:1.25rem;padding:.875rem 1rem;margin-bottom:.875rem;box-shadow:var(--shadow);border-left:6px solid var(--warn)}
+.alert strong{color:var(--warn)}
+.bubble{position:relative;background:var(--card2);border-radius:1.25rem;padding:.75rem 1rem;margin-bottom:.75rem;font-size:.9375rem}
+.check{background:var(--accent-soft);border-radius:1.25rem;padding:.875rem 1rem;margin-bottom:.875rem}
 .check p{margin:0}
-ul.avoid{margin:.25rem 0 1rem;padding-left:1.25rem;font-size:.9375rem}
-.basis{font-size:.8125rem;color:var(--sub)}
-details{margin-top:1.5rem;font-size:.8125rem;color:var(--sub)}
-details summary{cursor:pointer;color:var(--text)}
+.check b{color:var(--accent)}
+.avoid-title{font-weight:900;font-size:.9375rem;margin:1rem 0 .375rem}
+ul.avoid{margin:0 0 1rem;padding:0;list-style:none;display:grid;gap:.375rem}
+ul.avoid li{background:var(--card);border-radius:.875rem;padding:.5rem .75rem;font-size:.875rem;box-shadow:var(--shadow)}
+ul.avoid li::before{content:"\00D7";color:var(--warn);font-weight:900;margin-right:.5rem}
+.basis{font-size:.75rem;color:var(--sub);line-height:1.6}
+details{margin-top:1.25rem;font-size:.8125rem;color:var(--sub);background:var(--card);border-radius:1rem;padding:.75rem 1rem}
+details summary{cursor:pointer;color:var(--text);font-weight:700}
 a{color:var(--accent)}
-.foot{font-size:.75rem;color:var(--sub);margin-top:1.5rem}
-@media (prefers-reduced-motion:no-preference){.layer{transition:background .2s}}
+.foot{font-size:.75rem;color:var(--sub);margin-top:1rem;line-height:1.6}
+@media (prefers-reduced-motion:no-preference){
+  .zz{animation:float 3s ease-in-out infinite}
+  .zz2{animation:float 3s ease-in-out .8s infinite}
+  @keyframes float{0%,100%{transform:translateY(0);opacity:.9}50%{transform:translateY(-6px);opacity:.5}}
+}
 </style>
 </head>
 <body>
 <main>
-  <h1>&#x306d;&#x3093;&#x306d;&#x306e;&#x670d;&#x30ca;&#x30d3;</h1>
-  <p class="lead">&#x6708;&#x9f62;&#x30fb;&#x5bdd;&#x5ba4;&#x306e;&#x5ba4;&#x6e29;&#x30fb;&#x4e00;&#x756a;&#x4e0a;&#x306b;&#x7740;&#x305b;&#x308b;1&#x7740;&#x304b;&#x3089;&#x3001;&#x305d;&#x306e;&#x4e0b;&#x306b;&#x7740;&#x305b;&#x308b;&#x3082;&#x306e;&#x306e;&#x76ee;&#x5b89;&#x3092;&#x51fa;&#x3057;&#x307e;&#x3059;&#x3002;</p>
+  <header>
+    <svg width="52" height="52" viewBox="0 0 52 52" aria-hidden="true">
+      <circle cx="26" cy="26" r="26" fill="var(--card2)"/>
+      <path d="M31 12a14 14 0 1 0 9 22A11 11 0 0 1 31 12z" fill="#F7C873"/>
+      <circle cx="15" cy="14" r="1.6" fill="#F7C873"/><circle cx="40" cy="16" r="1.2" fill="#F7C873"/>
+    </svg>
+    <div>
+      <h1>&#x306d;&#x3093;&#x306d;&#x306e;&#x670d;&#x30ca;&#x30d3;</h1>
+      <p class="lead">&#x6708;&#x9f62;&#x30fb;&#x5ba4;&#x6e29;&#x30fb;&#x4e00;&#x756a;&#x4e0a;&#x306e;1&#x7740;&#x304b;&#x3089;&#x3001;&#x4e0b;&#x306b;&#x7740;&#x305b;&#x308b;&#x3082;&#x306e;&#x306e;&#x76ee;&#x5b89;&#x3092;&#x51fa;&#x3057;&#x307e;&#x3059;</p>
+    </div>
+  </header>
 
-  <fieldset>
-    <legend>&#x6708;&#x9f62;</legend>
-    <div class="step">
-      <button type="button" id="ageMinus" aria-label="&#x6708;&#x9f62;&#x3092;&#x6e1b;&#x3089;&#x3059;">&#x2212;</button>
-      <output id="ageOut" aria-live="polite">4&#x304b;&#x6708;</output>
-      <button type="button" id="agePlus" aria-label="&#x6708;&#x9f62;&#x3092;&#x5897;&#x3084;&#x3059;">&#xff0b;</button>
+  <fieldset class="card">
+    <legend><span class="ico">&#x1f37c;</span>&#x6708;&#x9f62;</legend>
+    <div class="age">
+      <button type="button" class="round" id="ageMinus" aria-label="&#x6708;&#x9f62;&#x3092;&#x6e1b;&#x3089;&#x3059;">&#x2212;</button>
+      <output id="ageOut" aria-live="polite">&#x751f;&#x5f8c;4&#x304b;&#x6708;</output>
+      <button type="button" class="round" id="agePlus" aria-label="&#x6708;&#x9f62;&#x3092;&#x5897;&#x3084;&#x3059;">&#xff0b;</button>
     </div>
   </fieldset>
 
-  <fieldset>
-    <legend>&#x5bdd;&#x8fd4;&#x308a;</legend>
-    <div class="seg" role="radiogroup">
+  <fieldset class="card">
+    <legend><span class="ico">&#x1f504;</span>&#x5bdd;&#x8fd4;&#x308a;</legend>
+    <div class="seg">
       <label><input type="radio" name="roll" value="no" checked><span>&#x307e;&#x3060;&#x3057;&#x306a;&#x3044;</span></label>
       <label><input type="radio" name="roll" value="yes"><span>&#x3057;&#x305d;&#x3046;&#x30fb;&#x3059;&#x308b;</span></label>
     </div>
   </fieldset>
 
-  <fieldset class="temp">
-    <legend>&#x5bdd;&#x5ba4;&#x306e;&#x5ba4;&#x6e29;</legend>
-    <div class="temp-row">
+  <fieldset class="card">
+    <legend><span class="ico">&#x1f321;&#xfe0f;</span>&#x5bdd;&#x5ba4;&#x306e;&#x5ba4;&#x6e29;</legend>
+    <div class="temp-head">
       <div>
-        <div class="temp-value"><span id="tempOut">18.0</span><small>&#x2103;</small></div>
-        <div class="band" id="bandOut"></div>
+        <div class="temp-value" id="tempValue"><span id="tempOut">18.0</span><small>&#x2103;</small></div>
+        <span class="band" id="bandOut"></span>
       </div>
-      <div class="step">
-        <button type="button" id="tMinus" aria-label="0.5&#x5ea6;&#x4e0b;&#x3052;&#x308b;">&#x2212;</button>
-        <button type="button" id="tPlus" aria-label="0.5&#x5ea6;&#x4e0a;&#x3052;&#x308b;">&#xff0b;</button>
+      <div class="temp-btns">
+        <button type="button" class="round" id="tMinus" aria-label="0.5&#x5ea6;&#x4e0b;&#x3052;&#x308b;">&#x2212;</button>
+        <button type="button" class="round" id="tPlus" aria-label="0.5&#x5ea6;&#x4e0a;&#x3052;&#x308b;">&#xff0b;</button>
       </div>
     </div>
     <input type="range" id="temp" min="10" max="30" step="0.5" value="18" aria-label="&#x5bdd;&#x5ba4;&#x306e;&#x5ba4;&#x6e29;">
     <div class="scale"><span>10&#x2103;</span><span>20&#x2103;</span><span>30&#x2103;</span></div>
-    <p class="hint">&#x5c31;&#x5bdd;&#x4e2d;&#x306b;&#x3044;&#x3061;&#x3070;&#x3093;&#x4e0b;&#x304c;&#x308b;&#x6e29;&#x5ea6;&#x3092;&#x5165;&#x308c;&#x3066;&#x304f;&#x3060;&#x3055;&#x3044;&#xff08;&#x6696;&#x623f;&#x3092;&#x5207;&#x308b;&#x5bb6;&#x5ead;&#x306f;&#x660e;&#x3051;&#x65b9;&#x306e;&#x6e29;&#x5ea6;&#xff09;&#x3002;</p>
+    <p class="hint">&#x5c31;&#x5bdd;&#x4e2d;&#x306b;&#x3044;&#x3061;&#x3070;&#x3093;&#x4e0b;&#x304c;&#x308b;&#x6e29;&#x5ea6;&#x3092;&#x5165;&#x308c;&#x3066;&#x306d;&#xff08;&#x6696;&#x623f;&#x3092;&#x5207;&#x308b;&#x306a;&#x3089;&#x660e;&#x3051;&#x65b9;&#x306e;&#x6e29;&#x5ea6;&#xff09;</p>
   </fieldset>
 
-  <fieldset>
-    <legend>&#x4e00;&#x756a;&#x4e0a;&#x306b;&#x7740;&#x305b;&#x308b;1&#x7740;</legend>
+  <fieldset class="card">
+    <legend><span class="ico">&#x1f9f8;</span>&#x4e00;&#x756a;&#x4e0a;&#x306b;&#x7740;&#x305b;&#x308b;1&#x7740;</legend>
     <div class="seg">
       <label><input type="radio" name="top" value="sleeper" checked><span>&#x30b9;&#x30ea;&#x30fc;&#x30d1;&#x30fc;</span></label>
       <label><input type="radio" name="top" value="swaddle"><span>&#x304a;&#x304f;&#x308b;&#x307f;</span></label>
     </div>
   </fieldset>
 
-  <fieldset>
-    <legend>&#x305d;&#x306e;1&#x7740;&#x306e;&#x7d20;&#x6750;</legend>
+  <fieldset class="card">
+    <legend><span class="ico">&#x1f9f6;</span>&#x305d;&#x306e;1&#x7740;&#x306e;&#x7d20;&#x6750;</legend>
     <div class="seg">
       <label><input type="radio" name="mat" value="g"><span>&#x30ac;&#x30fc;&#x30bc;&#x7cfb;</span></label>
       <label><input type="radio" name="mat" value="t" checked><span>&#x30bf;&#x30aa;&#x30eb;&#x30fb;&#x30ad;&#x30eb;&#x30c8;&#x7cfb;</span></label>
       <label><input type="radio" name="mat" value="f"><span>&#x30d5;&#x30ea;&#x30fc;&#x30b9;&#x30fb;&#x30dc;&#x30a2;&#x7cfb;</span></label>
     </div>
-    <p class="hint">&#x4e2d;&#x7dbf;&#x30fb;&#x30c0;&#x30a6;&#x30f3;&#x306f;&#x30d5;&#x30ea;&#x30fc;&#x30b9;&#x30fb;&#x30dc;&#x30a2;&#x7cfb;&#x3001;6&#x91cd;&#x30ac;&#x30fc;&#x30bc;&#x306f;&#x30ac;&#x30fc;&#x30bc;&#x7cfb;&#x3092;&#x9078;&#x3093;&#x3067;&#x304f;&#x3060;&#x3055;&#x3044;&#x3002;</p>
+    <p class="hint">&#x4e2d;&#x7dbf;&#x30fb;&#x30c0;&#x30a6;&#x30f3;&#x306f;&#x30d5;&#x30ea;&#x30fc;&#x30b9;&#x30fb;&#x30dc;&#x30a2;&#x7cfb;&#x3001;6&#x91cd;&#x30ac;&#x30fc;&#x30bc;&#x306f;&#x30ac;&#x30fc;&#x30bc;&#x7cfb;&#x3092;&#x9078;&#x3093;&#x3067;&#x306d;</p>
   </fieldset>
 
-  <noscript><div class="change"><strong>&#x7d50;&#x679c;&#x304c;&#x8868;&#x793a;&#x3067;&#x304d;&#x307e;&#x305b;&#x3093;</strong><br>&#x30d7;&#x30ec;&#x30d3;&#x30e5;&#x30fc;&#x753b;&#x9762;&#x3067;&#x306f;&#x3053;&#x306e;&#x30a2;&#x30d7;&#x30ea;&#x306f;&#x52d5;&#x304d;&#x307e;&#x305b;&#x3093;&#x3002;&#x53f3;&#x4e0a;&#x306e;&#x30e1;&#x30cb;&#x30e5;&#x30fc;&#x306a;&#x3069;&#x304b;&#x3089;&#x300c;Safari&#x3067;&#x958b;&#x304f;&#x300d;&#x300c;Chrome&#x3067;&#x958b;&#x304f;&#x300d;&#x3092;&#x9078;&#x3093;&#x3067;&#x3001;&#x30d6;&#x30e9;&#x30a6;&#x30b6;&#x3067;&#x958b;&#x304d;&#x76f4;&#x3057;&#x3066;&#x304f;&#x3060;&#x3055;&#x3044;&#x3002;</div></noscript>
+  <noscript><div class="alert"><strong>&#x7d50;&#x679c;&#x304c;&#x8868;&#x793a;&#x3067;&#x304d;&#x307e;&#x305b;&#x3093;</strong><br>&#x30d7;&#x30ec;&#x30d3;&#x30e5;&#x30fc;&#x753b;&#x9762;&#x3067;&#x306f;&#x3053;&#x306e;&#x30a2;&#x30d7;&#x30ea;&#x306f;&#x52d5;&#x304d;&#x307e;&#x305b;&#x3093;&#x3002;&#x30e1;&#x30cb;&#x30e5;&#x30fc;&#x304b;&#x3089;&#x300c;Safari&#x3067;&#x958b;&#x304f;&#x300d;&#x300c;Chrome&#x3067;&#x958b;&#x304f;&#x300d;&#x3092;&#x9078;&#x3093;&#x3067;&#x3001;&#x30d6;&#x30e9;&#x30a6;&#x30b6;&#x3067;&#x958b;&#x304d;&#x76f4;&#x3057;&#x3066;&#x304f;&#x3060;&#x3055;&#x3044;&#x3002;</div></noscript>
   <section id="result" aria-live="polite"></section>
 
   <details>
@@ -189,7 +230,6 @@ function bandIndex(t){ for(var i=0;i<BANDS.length;i++){ if(t<BANDS[i].max) retur
 function ageLabel(m){ if(m<12) return "\u751f\u5f8c"+m+"\u304b\u6708"; var y=Math.floor(m/12), r=m%12; return y+"\u6b73"+(r?r+"\u304b\u6708":""); }
 
 function judge(s){
-  // s = {age:0-24, roll:bool, temp:number, top:"sleeper"|"swaddle", mat:"g"|"t"|"f"}
   var r = {blocked:null, band:bandIndex(s.temp), wear:[], topLabel:"", change:null, changeKind:null, notes:[], basis:[]};
   r.bandName = BANDS[r.band].name;
   var topName = s.top==="swaddle" ? "\u304a\u304f\u308b\u307f" : "\u30b9\u30ea\u30fc\u30d1\u30fc";
@@ -200,13 +240,12 @@ function judge(s){
   }
   var c = BASE[r.band][s.mat];
   var wear = c.wear.slice();
-  // 1\u6b73\u4ee5\u964d\uff1a\u30ed\u30f3\u30d1\u30fc\u30b9\u2192\u30d1\u30b8\u30e3\u30de
   if(s.age>=12){ wear = wear.map(function(w){ return w.replace("\u30ed\u30f3\u30d1\u30fc\u30b9","\u30d1\u30b8\u30e3\u30de"); }); }
-  // \u6708\u9f62\u88dc\u6b63\uff1a0\u301c3\u304b\u6708\u306f\u808c\u7740\u30921\u679a\u8ffd\u52a0\uff080\u301c1\u304b\u6708\u3082+1\u679a\u307e\u3067\uff09
   var added = false;
   if(s.age<=3){ wear.unshift("\u77ed\u808c\u7740"); added = true; }
   r.wear = wear;
   r.added = added;
+  r.removeTop = !!c.removeTop;
   r.topLabel = c.removeTop ? "" : (c.hot ? topName+"\uff08\u30bf\u30aa\u30eb\u30fb\u30ad\u30eb\u30c8\u7cfb\u4ee5\u4e0b\u306b\u66ff\u3048\u308b\uff09" : topName+"\uff08"+MAT_NAME[s.mat]+"\uff09");
   if(c.change){ r.change = c.change; r.changeKind = c.hot ? "hot" : "cold"; }
   if(c.cold && c.change){ r.notes.push("\u66ff\u3048\u3089\u308c\u306a\u3044\u3068\u304d\u306f\u3001\u4e0b\u306b\u4e26\u3079\u305f\u7d44\u5408\u305b\u306b\u3057\u3066\u304f\u3060\u3055\u3044\u3002\u6bdb\u5e03\u3084\u639b\u3051\u5e03\u56e3\u3092\u4e0a\u306b\u91cd\u306d\u308b\u306e\u3067\u306f\u306a\u304f\u3001\u670d\u3067\u8abf\u7bc0\u3057\u307e\u3059\u3002"); }
@@ -214,12 +253,102 @@ function judge(s){
   if(c.note){ r.notes.push(c.note); }
   if(s.age<=1 && s.temp<20){ r.notes.push("\u751f\u5f8c1\u304b\u6708\u9803\u307e\u3067\u306f\u3001\u5ba4\u6e29\u309220\u301c23\u2103\u306b\u8fd1\u3065\u3051\u308b\u306e\u304c\u304a\u3059\u3059\u3081\u3067\u3059\u3002"); }
   if(s.age>=6 && s.top==="swaddle"){ r.notes.push("\u624b\u8db3\u304c\u52d5\u304b\u305b\u308b\u3088\u3046\u3001\u5bdd\u8fd4\u308a\u306e\u69d8\u5b50\u3092\u3053\u307e\u3081\u306b\u78ba\u8a8d\u3057\u3066\u304f\u3060\u3055\u3044\u3002"); }
-  // \u6839\u62e0
   r.basis.push(c.src ? "\u7d44\u5408\u305b\uff1a\u56fd\u5185\u30e1\u30fc\u30ab\u30fc\u306e\u7740\u305b\u65b9\u30ac\u30a4\u30c9" : "\u7d44\u5408\u305b\uff1a\u56fd\u5185\u30e1\u30fc\u30ab\u30fc\u306e\u7740\u305b\u65b9\u30ac\u30a4\u30c9\u304b\u3089\u7d20\u6750\u306e\u539a\u307f\u306e\u5dee\u3067\u63a8\u5b9a");
   if(added){ r.basis.push("\u6708\u9f62\u88dc\u6b63\uff1a\u751f\u5f8c3\u304b\u6708\u9803\u307e\u3067\u306f4\u304b\u6708\u4ee5\u964d\u3088\u308a1\u679a\u591a\u304f\uff08\u5927\u962a\u5e02\u65ed\u533a\u306e\u80b2\u5150\u8cc7\u6599\u306e\u8003\u3048\u65b9\u30020\u301c1\u304b\u6708\u3082\u8ffd\u52a0\u306f1\u679a\u307e\u3067\uff09"); }
   else if(s.age>=12){ r.basis.push("1\u6b73\u4ee5\u964d\u306f\u30ed\u30f3\u30d1\u30fc\u30b9\u3092\u30d1\u30b8\u30e3\u30de\u306b\u7f6e\u304d\u63db\u3048"); }
   else { r.basis.push("\u6708\u9f62\u88dc\u6b63\uff1a4\u304b\u6708\u4ee5\u964d\u306f\u5927\u4eba\u3088\u308a1\u679a\u5c11\u306a\u3081\u304c\u76ee\u5b89\uff08\u5927\u962a\u5e02\u65ed\u533a\u306e\u80b2\u5150\u8cc7\u6599\uff09"); }
   return r;
+}
+</script>
+
+<script>
+// ===== \u8d64\u3061\u3083\u3093\u306e\u30a4\u30e9\u30b9\u30c8 =====
+var SKIN="#FFDCC2", INK="#7A645A";
+function garmentColor(name){
+  if(name.indexOf("\u77ed\u808c\u7740")>=0) return "#FFF1D6";
+  if(name.indexOf("\u808c\u7740")>=0) return "#FFFFFF";
+  if(name.indexOf("\u30d1\u30b8\u30e3\u30de")>=0) return "#F9D3DF";
+  if(name.indexOf("\u534a\u8896\u30ed\u30f3\u30d1\u30fc\u30b9")>=0) return "#CDEFE0";
+  if(name.indexOf("\u30ed\u30f3\u30d1\u30fc\u30b9")>=0) return "#BFE0F2";
+  return "#FFFFFF";
+}
+var MAT_FILL = {g:"#FFF6E8", t:"#FFE3B3", f:"#E3D7F7"};
+var MAT_DOT  = {g:"#F0DCC0", t:"#F5C978", f:"#FFFFFF"};
+
+function arm(x1,y1,x2,y2,sleeve,len){
+  var sx=x1+(x2-x1)*len, sy=y1+(y2-y1)*len;
+  return '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="'+INK+'" stroke-width="19" stroke-linecap="round"/>'
+       + '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="'+SKIN+'" stroke-width="15" stroke-linecap="round"/>'
+       + '<line x1="'+x1+'" y1="'+y1+'" x2="'+sx.toFixed(1)+'" y2="'+sy.toFixed(1)+'" stroke="'+INK+'" stroke-width="21" stroke-linecap="round"/>'
+       + '<line x1="'+x1+'" y1="'+y1+'" x2="'+sx.toFixed(1)+'" y2="'+sy.toFixed(1)+'" stroke="'+sleeve+'" stroke-width="17" stroke-linecap="round"/>';
+}
+
+function babySVG(r, s){
+  var outer = r.wear.length ? r.wear[r.wear.length-1] : "\u808c\u7740";
+  var longSleeve = outer.indexOf("\u534a\u8896")<0 && (outer.indexOf("\u9577\u8896")>=0 || outer.indexOf("\u30ed\u30f3\u30d1\u30fc\u30b9")>=0 || outer.indexOf("\u30d1\u30b8\u30e3\u30de")>=0);
+  var sleeve = garmentColor(outer);
+  var swaddle = s.top==="swaddle" && !r.blocked;
+  var noTop = r.removeTop;
+  var matKey = (r.changeKind==="hot" && !noTop) ? "t" : s.mat;
+  var o = '<svg viewBox="0 0 220 230" role="img" aria-label="'+(r.blocked?"\u304a\u304f\u308b\u307f\u306f\u4f7f\u3048\u307e\u305b\u3093":"\u7740\u305b\u65b9\u306e\u30a4\u30e1\u30fc\u30b8")+'">';
+  o += '<defs><pattern id="tex" width="10" height="10" patternUnits="userSpaceOnUse">'
+     + '<circle cx="3" cy="3" r="1.4" fill="'+MAT_DOT[matKey]+'"/><circle cx="8" cy="8" r="1.4" fill="'+MAT_DOT[matKey]+'"/></pattern></defs>';
+  // \u661f\u3068\u304a\u6708\u3055\u307e
+  o += '<circle cx="24" cy="30" r="2.5" style="fill:var(--star)"/><circle cx="196" cy="44" r="2" style="fill:var(--star)"/><circle cx="182" cy="18" r="1.6" style="fill:var(--star)"/><circle cx="36" cy="80" r="1.4" style="fill:var(--star)"/>';
+  // \u307e\u304f\u3089
+  o += '<ellipse cx="110" cy="62" rx="70" ry="26" fill="#FFFFFF" opacity=".55"/>';
+  if(!swaddle){
+    // \u3070\u3093\u3056\u3044\u306e\u8155\uff08\u670d\u306e\u5f8c\u308d\u306b\u63cf\u304f\uff09
+    var len = longSleeve ? 0.82 : 0.36;
+    o += arm(78,112,50,78,sleeve,len) + arm(142,112,170,78,sleeve,len);
+    o += '<circle cx="48" cy="74" r="9" fill="'+SKIN+'" stroke="'+INK+'" stroke-width="2"/>';
+    o += '<circle cx="172" cy="74" r="9" fill="'+SKIN+'" stroke="'+INK+'" stroke-width="2"/>';
+  }
+  var bag = "M70,104 Q60,110 62,140 L66,196 Q70,218 110,218 Q150,218 154,196 L158,140 Q160,110 150,104 Q130,96 110,96 Q90,96 70,104 Z";
+  if(noTop){
+    // \u30b9\u30ea\u30fc\u30d1\u30fc\u306a\u3057\uff1a\u670d\u3060\u3051\uff08\u8db3\u3064\u304d\uff09
+    o += '<path d="M76,104 Q66,112 68,140 L70,176 Q72,186 84,186 L136,186 Q148,186 150,176 L152,140 Q154,112 144,104 Q128,98 110,98 Q92,98 76,104 Z" fill="'+sleeve+'" stroke="'+INK+'" stroke-width="2.2"/>';
+    o += '<ellipse cx="94" cy="200" rx="12" ry="16" fill="'+SKIN+'" stroke="'+INK+'" stroke-width="2"/>';
+    o += '<ellipse cx="126" cy="200" rx="12" ry="16" fill="'+SKIN+'" stroke="'+INK+'" stroke-width="2"/>';
+    o += '<path d="M70,176 Q110,192 150,176" fill="none" stroke="'+INK+'" stroke-width="2" opacity=".5"/>';
+  } else {
+    o += '<path d="'+bag+'" fill="'+MAT_FILL[matKey]+'" stroke="'+INK+'" stroke-width="2.2"/>';
+    o += '<path d="'+bag+'" fill="url(#tex)"/>';
+    if(swaddle){
+      o += '<path d="M64,120 Q110,150 156,124" fill="none" stroke="'+INK+'" stroke-width="2" opacity=".55"/>';
+      o += '<path d="M66,150 Q110,180 154,152" fill="none" stroke="'+INK+'" stroke-width="2" opacity=".55"/>';
+    } else {
+      // \u30b9\u30ca\u30c3\u30d7\u30dc\u30bf\u30f3
+      o += '<circle cx="110" cy="150" r="3" fill="#FFFFFF" stroke="'+INK+'" stroke-width="1.5"/><circle cx="110" cy="172" r="3" fill="#FFFFFF" stroke="'+INK+'" stroke-width="1.5"/>';
+    }
+  }
+  // \u3048\u308a\uff1a\u91cd\u306d\u7740\u306e\u679a\u6570\u3076\u3093\u3001\u5185\u5074\u306e\u670d\u304c\u9996\u5143\u304b\u3089\u306e\u305e\u304f
+  var layers = r.wear.slice().reverse(); // \u5916\u5074\u2192\u5185\u5074
+  layers.forEach(function(w,i){
+    var rx = 30 - i*6, ry = 11 - i*1.5, cy = 102 - i*2.5;
+    if(rx>8) o += '<ellipse cx="110" cy="'+cy+'" rx="'+rx+'" ry="'+ry+'" fill="'+garmentColor(w)+'" stroke="'+INK+'" stroke-width="1.8"/>';
+  });
+  // \u9854
+  o += '<circle cx="110" cy="64" r="36" fill="'+SKIN+'" stroke="'+INK+'" stroke-width="2.2"/>';
+  o += '<path d="M104,30 q6,-8 12,-2 q-4,2 -2,7" fill="none" stroke="'+INK+'" stroke-width="2.2" stroke-linecap="round"/>';
+  o += '<path d="M90,66 q7,6 14,0" fill="none" stroke="'+INK+'" stroke-width="2.4" stroke-linecap="round"/>';
+  o += '<path d="M116,66 q7,6 14,0" fill="none" stroke="'+INK+'" stroke-width="2.4" stroke-linecap="round"/>';
+  var cheek = r.changeKind==="hot" ? "#FF8C8C" : "#FFB3B3";
+  o += '<ellipse cx="86" cy="78" rx="7" ry="5" fill="'+cheek+'" opacity=".7"/><ellipse cx="134" cy="78" rx="7" ry="5" fill="'+cheek+'" opacity=".7"/>';
+  o += '<path d="M104,84 q6,5 12,0" fill="none" stroke="'+INK+'" stroke-width="2.2" stroke-linecap="round"/>';
+  if(r.changeKind==="hot"){
+    o += '<path d="M150,40 q6,10 0,14 q-6,-4 0,-14z" fill="#8FC9F0" stroke="'+INK+'" stroke-width="1.5"/>';
+    o += '<path d="M162,58 q5,8 0,11 q-5,-3 0,-11z" fill="#8FC9F0" stroke="'+INK+'" stroke-width="1.5"/>';
+  } else if(r.changeKind==="cold"){
+    o += '<g stroke="#8FC9F0" stroke-width="2.4" stroke-linecap="round"><path d="M160,30 v16 M152,38 h16 M154,32 l12,12 M166,32 l-12,12"/></g>';
+  } else {
+    o += '<text class="zz" x="150" y="36" font-size="16" font-weight="900" style="fill:var(--sub)" font-family="Arial,sans-serif">z</text>';
+    o += '<text class="zz2" x="164" y="22" font-size="12" font-weight="900" style="fill:var(--sub)" font-family="Arial,sans-serif">z</text>';
+  }
+  if(r.blocked){
+    o += '<circle cx="110" cy="160" r="34" fill="none" style="stroke:var(--warn)" stroke-width="6"/><line x1="86" y1="136" x2="134" y2="184" style="stroke:var(--warn)" stroke-width="6" stroke-linecap="round"/>';
+  }
+  return o + '</svg>';
 }
 </script>
 
@@ -244,23 +373,24 @@ function syncInputs(){
 function render(){
   var r = judge(state);
   $("bandOut").textContent = r.bandName;
-  var h = "";
+  $("tempValue").className = "temp-value c"+r.band;
+  var h = '<div class="scene">'+babySVG(r,state)+'</div>';
   if(r.blocked){
-    h += '<h2>\u3053\u306e\u7d44\u5408\u305b\u3067\u306f\u4f7f\u3048\u307e\u305b\u3093</h2><div class="change"><strong>\u6ce8\u610f</strong><br>'+esc(r.blocked)+'</div>';
+    h += '<p class="res-title">\u3053\u306e\u7d44\u5408\u305b\u3067\u306f\u4f7f\u3048\u307e\u305b\u3093</p><div class="alert"><strong>\u6ce8\u610f</strong><br>'+esc(r.blocked)+'</div>';
   } else {
-    h += "<h2>"+esc(ageLabel(state.age))+"\u30fb"+esc(Number(state.temp).toFixed(1))+"\u2103\u306e\u3068\u304d\u306e\u76ee\u5b89</h2>";
-    if(r.change){ h += '<div class="change"><strong>'+(r.changeKind==="hot"?"\u6691\u3059\u304e\u307e\u3059":"\u5bd2\u3059\u304e\u307e\u3059")+'</strong><br>'+esc(r.change)+'</div>'; }
-    h += '<div class="stack" aria-label="\u4e0b\u304b\u3089\u9806\u306b\u7740\u305b\u308b\u3082\u306e">';
+    h += '<p class="res-title">'+esc(ageLabel(state.age))+'\u30fb'+esc(Number(state.temp).toFixed(1))+'\u2103\u306e\u3068\u304d\u306e\u76ee\u5b89</p>';
+    if(r.change){ h += '<div class="alert"><strong>'+(r.changeKind==="hot"?"\u6691\u3059\u304e\u307e\u3059":"\u5bd2\u3059\u304e\u307e\u3059")+'</strong><br>'+esc(r.change)+'</div>'; }
+    h += '<ol class="stack" aria-label="\u808c\u306b\u8fd1\u3044\u9806\u306b\u7740\u305b\u308b\u3082\u306e">';
     r.wear.forEach(function(w,i){
-      var tag = (i===0 && r.added) ? '<small>\u6708\u9f62\u5206 +1\u679a</small>' : (i===0 ? '<small>\u808c\u306b\u76f4\u63a5</small>' : '');
-      h += '<div class="layer l'+Math.min(i,3)+'"><span>'+esc(w)+'</span>'+tag+'</div>';
+      var tag = (i===0 && r.added) ? '<span class="tag">\u6708\u9f62\u5206 +1\u679a</span>' : (i===0 ? '<span class="tag">\u808c\u306b\u76f4\u63a5</span>' : '');
+      h += '<li><span class="num">'+(i+1)+'</span><span class="dot" style="background:'+garmentColor(w)+'"></span><span>'+esc(w)+'</span>'+tag+'</li>';
     });
-    if(r.topLabel){ h += '<div class="layer top-layer"><span>'+esc(r.topLabel)+'</span><small>\u4e00\u756a\u4e0a</small></div>'; }
-    h += '</div>';
-    r.notes.forEach(function(n){ h += '<div class="note">'+esc(n)+'</div>'; });
+    if(r.topLabel){ h += '<li class="top"><span class="num">'+(r.wear.length+1)+'</span><span class="dot" style="background:'+MAT_FILL[r.changeKind==="hot"?"t":state.mat]+'"></span><span>'+esc(r.topLabel)+'</span><span class="tag">\u4e00\u756a\u4e0a</span></li>'; }
+    h += '</ol>';
+    r.notes.forEach(function(n){ h += '<div class="bubble">'+esc(n)+'</div>'; });
   }
-  h += '<div class="check"><p><strong>\u5bdd\u304b\u305b\u305f\u3089\u78ba\u8a8d</strong>\u3000\u80f8\u304b\u9996\u306e\u5f8c\u308d\u3092\u89e6\u3063\u3066\u3001\u6c57\u3070\u3093\u3067\u3044\u305f\u30891\u679a\u6e1b\u3089\u3057\u307e\u3059\u3002\u624b\u8db3\u304c\u51b7\u305f\u3044\u306e\u306f\u666e\u901a\u3067\u3059\u3002</p></div>';
-  h += '<p class="label">\u907f\u3051\u308b\u3082\u306e</p><ul class="avoid">'
+  h += '<div class="check"><p><b>\u5bdd\u304b\u305b\u305f\u3089\u78ba\u8a8d</b><br>\u80f8\u304b\u9996\u306e\u5f8c\u308d\u3092\u89e6\u3063\u3066\u3001\u6c57\u3070\u3093\u3067\u3044\u305f\u30891\u679a\u6e1b\u3089\u3057\u307e\u3059\u3002\u624b\u8db3\u304c\u51b7\u305f\u3044\u306e\u306f\u666e\u901a\u3067\u3059\u3002</p></div>';
+  h += '<p class="avoid-title">\u907f\u3051\u308b\u3082\u306e</p><ul class="avoid">'
      + '<li>\u5e3d\u5b50\uff08\u5ba4\u5185\u3067\u306f\u5916\u3059\uff09</li>'
      + '<li>\u30b9\u30ea\u30fc\u30d1\u30fc\u30fb\u304a\u304f\u308b\u307f\u306e\u4e0a\u306b\u639b\u3051\u5e03\u56e3\u3084\u6bdb\u5e03\u3092\u91cd\u306d\u308b\u3053\u3068</li>'
      + '<li>\u5ba4\u5185\u3067\u306e\u624b\u888b\u30fb\u9774\u4e0b\uff08\u624b\u8db3\u3067\u71b1\u3092\u9003\u304c\u3059\u305f\u3081\uff09</li>'
