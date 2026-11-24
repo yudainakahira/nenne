@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>&#x306d;&#x3093;&#x306d;&#x306e;&#x670d;&#x30ca;&#x30d3;</title>
+<style>
+:root{
+  --bg:#FFFFFF; --surface:#F2F2F2; --line:#D9D9D9; --text:#000000; --sub:#595959;
+  --accent:#0033CC; --accent-strong:#002699; --accent-soft:#C2D1FF; --on-accent:#FFFFFF;
+  --warn:#FF0000; --layer1:#C2D1FF; --layer2:#85A3FF; --layer3:#0033CC; --layer4:#002699;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0D0D0D; --surface:#262626; --line:#404040; --text:#F2F2F2; --sub:#A6A6A6;
+    --accent:#85A3FF; --accent-strong:#C2D1FF; --accent-soft:#262626; --on-accent:#000000;
+    --warn:#FF0000; --layer1:#404040; --layer2:#002699; --layer3:#0033CC; --layer4:#85A3FF;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D0D0D; --surface:#262626; --line:#404040; --text:#F2F2F2; --sub:#A6A6A6;
+  --accent:#85A3FF; --accent-strong:#C2D1FF; --accent-soft:#262626; --on-accent:#000000;
+  --warn:#FF0000; --layer1:#404040; --layer2:#002699; --layer3:#0033CC; --layer4:#85A3FF;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:Arial,"MS PGothic",sans-serif;font-size:16px;line-height:1.6;
+  -webkit-text-size-adjust:100%}
+main{max-width:30rem;margin:0 auto;padding:1rem 1rem 3rem}
+h1{font-size:1.25rem;margin:.25rem 0 0;letter-spacing:.02em}
+.lead{color:var(--sub);font-size:.875rem;margin:.25rem 0 1.25rem}
+fieldset{border:0;margin:0 0 1.25rem;padding:0}
+legend,.label{font-weight:bold;font-size:.9375rem;margin-bottom:.5rem;padding:0}
+.hint{color:var(--sub);font-size:.8125rem;margin:.25rem 0 0}
+
+/* \5ba4 \6e29 \ff1a \3053 \306e \30a2 \30d7 \30ea \306e \4e3b \5f79  */
+.temp{background:var(--surface);border-radius:1rem;padding:1rem}
+.temp-row{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+.temp-value{font-size:3.5rem;font-weight:bold;line-height:1;font-variant-numeric:tabular-nums}
+.temp-value small{font-size:1.25rem;font-weight:normal;margin-left:.125rem}
+.band{font-size:.875rem;color:var(--sub);margin-top:.25rem}
+input[type=range]{width:100%;margin:1rem 0 .25rem;accent-color:var(--accent);height:2rem}
+.scale{display:flex;justify-content:space-between;font-size:.75rem;color:var(--sub)}
+
+.step{display:flex;align-items:center;gap:.5rem}
+.step button{width:2.75rem;height:2.75rem;border-radius:50%;border:1px solid var(--line);
+  background:var(--bg);color:var(--text);font-size:1.25rem;font-family:inherit;cursor:pointer}
+.step output{min-width:7.5rem;text-align:center;font-size:1.25rem;font-weight:bold}
+
+.seg{display:flex;flex-wrap:wrap;gap:.5rem}
+.seg label{flex:1 1 auto;position:relative}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg span{display:block;text-align:center;padding:.625rem .5rem;border:1px solid var(--line);
+  border-radius:.5rem;font-size:.9375rem;cursor:pointer;background:var(--bg)}
+.seg input:checked+span{background:var(--accent);border-color:var(--accent);color:var(--on-accent);font-weight:bold}
+.seg input:focus-visible+span,.step button:focus-visible,input[type=range]:focus-visible{outline:3px solid var(--accent-strong);outline-offset:2px}
+
+/* \7d50 \679c  */
+#result{border-top:2px solid var(--text);padding-top:1rem;margin-top:.5rem}
+#result h2{font-size:1.0625rem;margin:0 0 .75rem}
+.stack{display:flex;flex-direction:column-reverse;gap:3px;margin:0 0 1rem}
+.layer{border-radius:.5rem;padding:.625rem .875rem;font-weight:bold;display:flex;justify-content:space-between;gap:.5rem}
+.layer small{font-weight:normal;font-size:.8125rem}
+.l0{background:var(--layer1);color:var(--text)}
+.l1{background:var(--layer2);color:#FFFFFF}
+.l2{background:var(--layer3);color:#FFFFFF}
+.l3{background:var(--layer4);color:var(--bg)}
+.top-layer{border:2px dashed var(--accent);background:transparent;color:var(--text)}
+.change{border-left:4px solid var(--warn);background:var(--surface);padding:.75rem;border-radius:0 .5rem .5rem 0;margin-bottom:1rem}
+.change strong{color:var(--warn)}
+.note{background:var(--surface);padding:.75rem;border-radius:.5rem;margin-bottom:1rem;font-size:.9375rem}
+.check{border:1px solid var(--accent);border-radius:.5rem;padding:.75rem;margin-bottom:1rem}
+.check p{margin:0}
+ul.avoid{margin:.25rem 0 1rem;padding-left:1.25rem;font-size:.9375rem}
+.basis{font-size:.8125rem;color:var(--sub)}
+details{margin-top:1.5rem;font-size:.8125rem;color:var(--sub)}
+details summary{cursor:pointer;color:var(--text)}
+a{color:var(--accent)}
+.foot{font-size:.75rem;color:var(--sub);margin-top:1.5rem}
+@media (prefers-reduced-motion:no-preference){.layer{transition:background .2s}}
+</style>
+</head>
+<body>
+<main>
+  <h1>&#x306d;&#x3093;&#x306d;&#x306e;&#x670d;&#x30ca;&#x30d3;</h1>
+  <p class="lead">&#x6708;&#x9f62;&#x30fb;&#x5bdd;&#x5ba4;&#x306e;&#x5ba4;&#x6e29;&#x30fb;&#x4e00;&#x756a;&#x4e0a;&#x306b;&#x7740;&#x305b;&#x308b;1&#x7740;&#x304b;&#x3089;&#x3001;&#x305d;&#x306e;&#x4e0b;&#x306b;&#x7740;&#x305b;&#x308b;&#x3082;&#x306e;&#x306e;&#x76ee;&#x5b89;&#x3092;&#x51fa;&#x3057;&#x307e;&#x3059;&#x3002;</p>
+
+  <fieldset>
+    <legend>&#x6708;&#x9f62;</legend>
+    <div class="step">
+      <button type="button" id="ageMinus" aria-label="&#x6708;&#x9f62;&#x3092;&#x6e1b;&#x3089;&#x3059;">&#x2212;</button>
+      <output id="ageOut" aria-live="polite">4&#x304b;&#x6708;</output>
+      <button type="button" id="agePlus" aria-label="&#x6708;&#x9f62;&#x3092;&#x5897;&#x3084;&#x3059;">&#xff0b;</button>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>&#x5bdd;&#x8fd4;&#x308a;</legend>
+    <div class="seg" role="radiogroup">
+      <label><input type="radio" name="roll" value="no" checked><span>&#x307e;&#x3060;&#x3057;&#x306a;&#x3044;</span></label>
+      <label><input type="radio" name="roll" value="yes"><span>&#x3057;&#x305d;&#x3046;&#x30fb;&#x3059;&#x308b;</span></label>
+    </div>
+  </fieldset>
+
+  <fieldset class="temp">
+    <legend>&#x5bdd;&#x5ba4;&#x306e;&#x5ba4;&#x6e29;</legend>
+    <div class="temp-row">
+      <div>
+        <div class="temp-value"><span id="tempOut">18.0</span><small>&#x2103;</small></div>
+        <div class="band" id="bandOut"></div>
+      </div>
+      <div class="step">
+        <button type="button" id="tMinus" aria-label="0.5&#x5ea6;&#x4e0b;&#x3052;&#x308b;">&#x2212;</button>
+        <button type="button" id="tPlus" aria-label="0.5&#x5ea6;&#x4e0a;&#x3052;&#x308b;">&#xff0b;</button>
+      </div>
+    </div>
+    <input type="range" id="temp" min="10" max="30" step="0.5" value="18" aria-label="&#x5bdd;&#x5ba4;&#x306e;&#x5ba4;&#x6e29;">
+    <div class="scale"><span>10&#x2103;</span><span>20&#x2103;</span><span>30&#x2103;</span></div>
+    <p class="hint">&#x5c31;&#x5bdd;&#x4e2d;&#x306b;&#x3044;&#x3061;&#x3070;&#x3093;&#x4e0b;&#x304c;&#x308b;&#x6e29;&#x5ea6;&#x3092;&#x5165;&#x308c;&#x3066;&#x304f;&#x3060;&#x3055;&#x3044;&#xff08;&#x6696;&#x623f;&#x3092;&#x5207;&#x308b;&#x5bb6;&#x5ead;&#x306f;&#x660e;&#x3051;&#x65b9;&#x306e;&#x6e29;&#x5ea6;&#xff09;&#x3002;</p>
+  </fieldset>
+
+  <fieldset>
+    <legend>&#x4e00;&#x756a;&#x4e0a;&#x306b;&#x7740;&#x305b;&#x308b;1&#x7740;</legend>
+    <div class="seg">
+      <label><input type="radio" name="top" value="sleeper" checked><span>&#x30b9;&#x30ea;&#x30fc;&#x30d1;&#x30fc;</span></label>
+      <label><input type="radio" name="top" value="swaddle"><span>&#x304a;&#x304f;&#x308b;&#x307f;</span></label>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>&#x305d;&#x306e;1&#x7740;&#x306e;&#x7d20;&#x6750;</legend>
+    <div class="seg">
+      <label><input type="radio" name="mat" value="g"><span>&#x30ac;&#x30fc;&#x30bc;&#x7cfb;</span></label>
+      <label><input type="radio" name="mat" value="t" checked><span>&#x30bf;&#x30aa;&#x30eb;&#x30fb;&#x30ad;&#x30eb;&#x30c8;&#x7cfb;</span></label>
+      <label><input type="radio" name="mat" value="f"><span>&#x30d5;&#x30ea;&#x30fc;&#x30b9;&#x30fb;&#x30dc;&#x30a2;&#x7cfb;</span></label>
+    </div>
+    <p class="hint">&#x4e2d;&#x7dbf;&#x30fb;&#x30c0;&#x30a6;&#x30f3;&#x306f;&#x30d5;&#x30ea;&#x30fc;&#x30b9;&#x30fb;&#x30dc;&#x30a2;&#x7cfb;&#x3001;6&#x91cd;&#x30ac;&#x30fc;&#x30bc;&#x306f;&#x30ac;&#x30fc;&#x30bc;&#x7cfb;&#x3092;&#x9078;&#x3093;&#x3067;&#x304f;&#x3060;&#x3055;&#x3044;&#x3002;</p>
+  </fieldset>
+
+  <noscript><div class="change"><strong>&#x7d50;&#x679c;&#x304c;&#x8868;&#x793a;&#x3067;&#x304d;&#x307e;&#x305b;&#x3093;</strong><br>&#x30d7;&#x30ec;&#x30d3;&#x30e5;&#x30fc;&#x753b;&#x9762;&#x3067;&#x306f;&#x3053;&#x306e;&#x30a2;&#x30d7;&#x30ea;&#x306f;&#x52d5;&#x304d;&#x307e;&#x305b;&#x3093;&#x3002;&#x53f3;&#x4e0a;&#x306e;&#x30e1;&#x30cb;&#x30e5;&#x30fc;&#x306a;&#x3069;&#x304b;&#x3089;&#x300c;Safari&#x3067;&#x958b;&#x304f;&#x300d;&#x300c;Chrome&#x3067;&#x958b;&#x304f;&#x300d;&#x3092;&#x9078;&#x3093;&#x3067;&#x3001;&#x30d6;&#x30e9;&#x30a6;&#x30b6;&#x3067;&#x958b;&#x304d;&#x76f4;&#x3057;&#x3066;&#x304f;&#x3060;&#x3055;&#x3044;&#x3002;</div></noscript>
+  <section id="result" aria-live="polite"></section>
+
+  <details>
+    <summary>&#x3053;&#x306e;&#x76ee;&#x5b89;&#x306e;&#x6839;&#x62e0;</summary>
+    <p>&#x5ba4;&#x6e29;&#x5e2f;&#x3068;&#x7d44;&#x5408;&#x305b;&#x306f;&#x56fd;&#x5185;&#x30e1;&#x30fc;&#x30ab;&#x30fc;&#x306e;&#x7740;&#x305b;&#x65b9;&#x30ac;&#x30a4;&#x30c9;&#xff08;<a href="https://www.rakuten.ne.jp/gold/peace-bg/contents/howtowear.html" target="_blank" rel="noopener">BabyGoose</a>&#xff09;&#x3092;&#x571f;&#x53f0;&#x306b;&#x3057;&#x3001;&#x4ed6;&#x306e;&#x7d20;&#x6750;&#x306f;&#x539a;&#x307f;&#x306e;&#x5dee;&#x304b;&#x3089;&#x63a8;&#x5b9a;&#x3057;&#x3066;&#x3044;&#x307e;&#x3059;&#x3002;&#x6708;&#x9f62;&#x306b;&#x3088;&#x308b;&#x679a;&#x6570;&#x306e;&#x8003;&#x3048;&#x65b9;&#x306f;<a href="https://www.city.osaka.lg.jp/asahi/cmsfiles/contents/0000258/258484/w41.pdf" target="_blank" rel="noopener">&#x5927;&#x962a;&#x5e02;&#x65ed;&#x533a;&#x306e;&#x80b2;&#x5150;&#x8cc7;&#x6599;</a>&#x3001;&#x7740;&#x305b;&#x3059;&#x304e;&#x30fb;&#x624b;&#x888b;&#x9774;&#x4e0b;&#x306e;&#x8003;&#x3048;&#x65b9;&#x306f;<a href="https://www.pref.kyoto.jp/kosodateqa/sewa_04.html" target="_blank" rel="noopener">&#x4eac;&#x90fd;&#x5e9c; &#x5b50;&#x80b2;&#x3066;Q&amp;A</a>&#x3001;&#x5e3d;&#x5b50;&#x30fb;&#x639b;&#x3051;&#x7269;&#x30fb;&#x304a;&#x304f;&#x308b;&#x307f;&#x30fb;&#x78ba;&#x8a8d;&#x65b9;&#x6cd5;&#x306f;<a href="https://healthychildren.org/english/ages-stages/baby/sleep/pages/Preventing-SIDS.aspx" target="_blank" rel="noopener">&#x7c73;&#x56fd;&#x5c0f;&#x5150;&#x79d1;&#x5b66;&#x4f1a;</a>&#x3068;<a href="https://www.lullabytrust.org.uk/baby-safety/baby-product-information/dress-your-baby-for-sleep/" target="_blank" rel="noopener">The Lullaby Trust</a>&#x306b;&#x57fa;&#x3065;&#x304d;&#x307e;&#x3059;&#x3002;</p>
+    <p>&#x5c0f;&#x5150;&#x79d1;&#x533b;&#x30fb;&#x52a9;&#x7523;&#x5e2b;&#x306b;&#x3088;&#x308b;&#x76e3;&#x4fee;&#x524d;&#x306e;&#x8a66;&#x4f5c;&#x7248;&#x3067;&#x3059;&#x3002;</p>
+  </details>
+  <p class="foot">&#x8868;&#x793a;&#x306f;&#x76ee;&#x5b89;&#x3067;&#x3059;&#x3002;&#x8d64;&#x3061;&#x3083;&#x3093;&#x306e;&#x69d8;&#x5b50;&#x3092;&#x898b;&#x3066;&#x8abf;&#x7bc0;&#x3057;&#x3066;&#x304f;&#x3060;&#x3055;&#x3044;&#x3002;&#x71b1;&#x304c;&#x3042;&#x308b;&#x3068;&#x304d;&#x3001;&#x4f53;&#x8abf;&#x304c;&#x60aa;&#x3044;&#x3068;&#x304d;&#x3001;&#x65e9;&#x7523;&#x30fb;&#x4f4e;&#x51fa;&#x751f;&#x4f53;&#x91cd;&#x3067;&#x751f;&#x307e;&#x308c;&#x305f;&#x5834;&#x5408;&#x3084;&#x6301;&#x75c5;&#x304c;&#x3042;&#x308b;&#x5834;&#x5408;&#x306f;&#x3001;&#x3053;&#x306e;&#x76ee;&#x5b89;&#x3092;&#x4f7f;&#x308f;&#x305a;&#x533b;&#x5e2b;&#x306e;&#x6307;&#x793a;&#x306b;&#x5f93;&#x3063;&#x3066;&#x304f;&#x3060;&#x3055;&#x3044;&#x3002;</p>
+</main>
+
+<script id="logic">
+// ===== \u5224\u5b9a\u30ed\u30b8\u30c3\u30af\uff08\u7d14\u7c8b\u95a2\u6570\u3002\u753b\u9762\u3068\u306f\u72ec\u7acb\uff09 =====
+var BANDS = [
+  {max:15, name:"15\u2103\u672a\u6e80\uff08\u3068\u3066\u3082\u5bd2\u3044\uff09"},
+  {max:18, name:"15\u301c17\u2103\uff08\u771f\u51ac\uff09"},
+  {max:23, name:"18\u301c22\u2103"},
+  {max:26, name:"23\u301c25\u2103"},
+  {max:Infinity, name:"26\u2103\u4ee5\u4e0a"}
+];
+var MAT_NAME = {g:"\u30ac\u30fc\u30bc\u7cfb", t:"\u30bf\u30aa\u30eb\u30fb\u30ad\u30eb\u30c8\u7cfb", f:"\u30d5\u30ea\u30fc\u30b9\u30fb\u30dc\u30a2\u7cfb"};
+var ROOM_NOTE = "\u6696\u623f\u3084\u65ad\u71b1\u3067\u3001\u5ba4\u6e29\u3092\u4e0a\u3052\u308b\u3053\u3068\u3082\u691c\u8a0e\u3057\u3066\u304f\u3060\u3055\u3044\u3002";
+// 4\u304b\u6708\u4ee5\u4e0a\u306e\u57fa\u6e96\u3002src=true \u306f\u30e1\u30fc\u30ab\u30fc\u30ac\u30a4\u30c9\u306e\u7d44\u5408\u305b\u3001\u305d\u308c\u4ee5\u5916\u306f\u63a8\u5b9a
+var BASE = [
+  { g:{wear:["\u9577\u8896\u808c\u7740","\u9577\u8896\u30ed\u30f3\u30d1\u30fc\u30b9"], change:"\u30d5\u30ea\u30fc\u30b9\u30fb\u30dc\u30a2\u7cfb\u306b\u66ff\u3048\u308b\u306e\u304c\u304a\u3059\u3059\u3081\u3067\u3059\u3002", cold:true, note:ROOM_NOTE},
+    t:{wear:["\u9577\u8896\u808c\u7740","\u9577\u8896\u30ed\u30f3\u30d1\u30fc\u30b9"], change:"\u30d5\u30ea\u30fc\u30b9\u30fb\u30dc\u30a2\u7cfb\u306b\u66ff\u3048\u308b\u306e\u304c\u304a\u3059\u3059\u3081\u3067\u3059\u3002", cold:true, note:ROOM_NOTE},
+    f:{wear:["\u9577\u8896\u808c\u7740","\u9577\u8896\u30ed\u30f3\u30d1\u30fc\u30b9"], note:ROOM_NOTE} },
+  { g:{wear:["\u9577\u8896\u808c\u7740","\u9577\u8896\u30ed\u30f3\u30d1\u30fc\u30b9"], change:"\u30bf\u30aa\u30eb\u30fb\u30ad\u30eb\u30c8\u7cfb\u4ee5\u4e0a\u306b\u66ff\u3048\u308b\u306e\u304c\u304a\u3059\u3059\u3081\u3067\u3059\u3002", cold:true},
+    t:{wear:["\u9577\u8896\u808c\u7740","\u9577\u8896\u30ed\u30f3\u30d1\u30fc\u30b9"], note:"\u80f8\u304c\u51b7\u305f\u3044\u3068\u304d\u306f\u3001\u30d5\u30ea\u30fc\u30b9\u30fb\u30dc\u30a2\u7cfb\u306b\u66ff\u3048\u3066\u304f\u3060\u3055\u3044\u3002"},
+    f:{wear:["\u808c\u7740","\u9577\u8896\u30ed\u30f3\u30d1\u30fc\u30b9"], src:true} },
+  { g:{wear:["\u808c\u7740","\u9577\u8896\u30ed\u30f3\u30d1\u30fc\u30b9"]},
+    t:{wear:["\u808c\u7740","\u9577\u8896\u30ed\u30f3\u30d1\u30fc\u30b9"], src:true},
+    f:{wear:["\u9577\u8896\u30ed\u30f3\u30d1\u30fc\u30b9"], note:"\u6c57\u3070\u3080\u3068\u304d\u306f\u3001\u30bf\u30aa\u30eb\u30fb\u30ad\u30eb\u30c8\u7cfb\u306b\u66ff\u3048\u3066\u304f\u3060\u3055\u3044\u3002"} },
+  { g:{wear:["\u534a\u8896\u30ed\u30f3\u30d1\u30fc\u30b9"]},
+    t:{wear:["\u534a\u8896\u30ed\u30f3\u30d1\u30fc\u30b9"], src:true},
+    f:{wear:["\u534a\u8896\u30ed\u30f3\u30d1\u30fc\u30b9"], change:"\u3053\u306e\u5ba4\u6e29\u3067\u306f\u30d5\u30ea\u30fc\u30b9\u30fb\u30dc\u30a2\u7cfb\u306f\u539a\u3059\u304e\u307e\u3059\u3002\u30bf\u30aa\u30eb\u30fb\u30ad\u30eb\u30c8\u7cfb\u4ee5\u4e0b\u306b\u66ff\u3048\u3066\u304f\u3060\u3055\u3044\u3002", hot:true} },
+  { g:{wear:["\u534a\u8896\u808c\u7740"], src:true},
+    t:{wear:["\u534a\u8896\u808c\u7740"], note:"\u6c57\u3070\u3080\u3068\u304d\u306f\u3001\u30ac\u30fc\u30bc\u7cfb\u306b\u66ff\u3048\u3066\u304f\u3060\u3055\u3044\u3002"},
+    f:{wear:["\u534a\u8896\u808c\u7740"], change:"\u3053\u306e\u5ba4\u6e29\u3067\u306f\u30b9\u30ea\u30fc\u30d1\u30fc\u306f\u5916\u3057\u3066\u304f\u3060\u3055\u3044\u3002", hot:true, removeTop:true} }
+];
+
+function bandIndex(t){ for(var i=0;i<BANDS.length;i++){ if(t<BANDS[i].max) return i; } return BANDS.length-1; }
+function ageLabel(m){ if(m<12) return "\u751f\u5f8c"+m+"\u304b\u6708"; var y=Math.floor(m/12), r=m%12; return y+"\u6b73"+(r?r+"\u304b\u6708":""); }
+
+function judge(s){
+  // s = {age:0-24, roll:bool, temp:number, top:"sleeper"|"swaddle", mat:"g"|"t"|"f"}
+  var r = {blocked:null, band:bandIndex(s.temp), wear:[], topLabel:"", change:null, changeKind:null, notes:[], basis:[]};
+  r.bandName = BANDS[r.band].name;
+  var topName = s.top==="swaddle" ? "\u304a\u304f\u308b\u307f" : "\u30b9\u30ea\u30fc\u30d1\u30fc";
+  if(s.top==="swaddle" && s.roll){
+    r.blocked = "\u5bdd\u8fd4\u308a\u3057\u305d\u3046\u30fb\u3059\u308b\u6642\u671f\u306f\u3001\u304a\u304f\u308b\u307f\u306f\u4f7f\u3044\u307e\u305b\u3093\u3002\u30b9\u30ea\u30fc\u30d1\u30fc\u306b\u66ff\u3048\u3066\u3001\u3082\u3046\u4e00\u5ea6\u9078\u3093\u3067\u304f\u3060\u3055\u3044\u3002";
+    r.basis.push("\u304a\u304f\u308b\u307f\u306f\u5bdd\u8fd4\u308a\u3057\u3088\u3046\u3068\u3057\u59cb\u3081\u305f\u3089\u4e2d\u6b62\uff08\u7c73\u56fd\u5c0f\u5150\u79d1\u5b66\u4f1a\uff09");
+    return r;
+  }
+  var c = BASE[r.band][s.mat];
+  var wear = c.wear.slice();
+  // 1\u6b73\u4ee5\u964d\uff1a\u30ed\u30f3\u30d1\u30fc\u30b9\u2192\u30d1\u30b8\u30e3\u30de
+  if(s.age>=12){ wear = wear.map(function(w){ return w.replace("\u30ed\u30f3\u30d1\u30fc\u30b9","\u30d1\u30b8\u30e3\u30de"); }); }
+  // \u6708\u9f62\u88dc\u6b63\uff1a0\u301c3\u304b\u6708\u306f\u808c\u7740\u30921\u679a\u8ffd\u52a0\uff080\u301c1\u304b\u6708\u3082+1\u679a\u307e\u3067\uff09
+  var added = false;
+  if(s.age<=3){ wear.unshift("\u77ed\u808c\u7740"); added = true; }
+  r.wear = wear;
+  r.added = added;
+  r.topLabel = c.removeTop ? "" : (c.hot ? topName+"\uff08\u30bf\u30aa\u30eb\u30fb\u30ad\u30eb\u30c8\u7cfb\u4ee5\u4e0b\u306b\u66ff\u3048\u308b\uff09" : topName+"\uff08"+MAT_NAME[s.mat]+"\uff09");
+  if(c.change){ r.change = c.change; r.changeKind = c.hot ? "hot" : "cold"; }
+  if(c.cold && c.change){ r.notes.push("\u66ff\u3048\u3089\u308c\u306a\u3044\u3068\u304d\u306f\u3001\u4e0b\u306b\u4e26\u3079\u305f\u7d44\u5408\u305b\u306b\u3057\u3066\u304f\u3060\u3055\u3044\u3002\u6bdb\u5e03\u3084\u639b\u3051\u5e03\u56e3\u3092\u4e0a\u306b\u91cd\u306d\u308b\u306e\u3067\u306f\u306a\u304f\u3001\u670d\u3067\u8abf\u7bc0\u3057\u307e\u3059\u3002"); }
+  if(c.hot && !c.removeTop){ r.notes.push("\u4e0b\u306e\u7d44\u5408\u305b\u306f\u3001\u66ff\u3048\u305f\u3042\u3068\u306e\u76ee\u5b89\u3067\u3059\u3002"); }
+  if(c.note){ r.notes.push(c.note); }
+  if(s.age<=1 && s.temp<20){ r.notes.push("\u751f\u5f8c1\u304b\u6708\u9803\u307e\u3067\u306f\u3001\u5ba4\u6e29\u309220\u301c23\u2103\u306b\u8fd1\u3065\u3051\u308b\u306e\u304c\u304a\u3059\u3059\u3081\u3067\u3059\u3002"); }
+  if(s.age>=6 && s.top==="swaddle"){ r.notes.push("\u624b\u8db3\u304c\u52d5\u304b\u305b\u308b\u3088\u3046\u3001\u5bdd\u8fd4\u308a\u306e\u69d8\u5b50\u3092\u3053\u307e\u3081\u306b\u78ba\u8a8d\u3057\u3066\u304f\u3060\u3055\u3044\u3002"); }
+  // \u6839\u62e0
+  r.basis.push(c.src ? "\u7d44\u5408\u305b\uff1a\u56fd\u5185\u30e1\u30fc\u30ab\u30fc\u306e\u7740\u305b\u65b9\u30ac\u30a4\u30c9" : "\u7d44\u5408\u305b\uff1a\u56fd\u5185\u30e1\u30fc\u30ab\u30fc\u306e\u7740\u305b\u65b9\u30ac\u30a4\u30c9\u304b\u3089\u7d20\u6750\u306e\u539a\u307f\u306e\u5dee\u3067\u63a8\u5b9a");
+  if(added){ r.basis.push("\u6708\u9f62\u88dc\u6b63\uff1a\u751f\u5f8c3\u304b\u6708\u9803\u307e\u3067\u306f4\u304b\u6708\u4ee5\u964d\u3088\u308a1\u679a\u591a\u304f\uff08\u5927\u962a\u5e02\u65ed\u533a\u306e\u80b2\u5150\u8cc7\u6599\u306e\u8003\u3048\u65b9\u30020\u301c1\u304b\u6708\u3082\u8ffd\u52a0\u306f1\u679a\u307e\u3067\uff09"); }
+  else if(s.age>=12){ r.basis.push("1\u6b73\u4ee5\u964d\u306f\u30ed\u30f3\u30d1\u30fc\u30b9\u3092\u30d1\u30b8\u30e3\u30de\u306b\u7f6e\u304d\u63db\u3048"); }
+  else { r.basis.push("\u6708\u9f62\u88dc\u6b63\uff1a4\u304b\u6708\u4ee5\u964d\u306f\u5927\u4eba\u3088\u308a1\u679a\u5c11\u306a\u3081\u304c\u76ee\u5b89\uff08\u5927\u962a\u5e02\u65ed\u533a\u306e\u80b2\u5150\u8cc7\u6599\uff09"); }
+  return r;
+}
+</script>
+
+<script>
+// ===== \u753b\u9762 =====
+var KEY = "nenne-fuku-navi:v1";
+var state = {age:4, roll:false, temp:18, top:"sleeper", mat:"t"};
+try{ var saved = JSON.parse(localStorage.getItem(KEY)||"null"); if(saved){ for(var k in state){ if(k in saved) state[k]=saved[k]; } } }catch(e){}
+
+var $ = function(id){ return document.getElementById(id); };
+function esc(t){ return String(t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+
+function syncInputs(){
+  $("ageOut").textContent = ageLabel(state.age);
+  $("temp").value = state.temp;
+  $("tempOut").textContent = Number(state.temp).toFixed(1);
+  document.querySelector('input[name=roll][value='+(state.roll?"yes":"no")+']').checked = true;
+  document.querySelector('input[name=top][value='+state.top+']').checked = true;
+  document.querySelector('input[name=mat][value='+state.mat+']').checked = true;
+}
+
+function render(){
+  var r = judge(state);
+  $("bandOut").textContent = r.bandName;
+  var h = "";
+  if(r.blocked){
+    h += '<h2>\u3053\u306e\u7d44\u5408\u305b\u3067\u306f\u4f7f\u3048\u307e\u305b\u3093</h2><div class="change"><strong>\u6ce8\u610f</strong><br>'+esc(r.blocked)+'</div>';
+  } else {
+    h += "<h2>"+esc(ageLabel(state.age))+"\u30fb"+esc(Number(state.temp).toFixed(1))+"\u2103\u306e\u3068\u304d\u306e\u76ee\u5b89</h2>";
+    if(r.change){ h += '<div class="change"><strong>'+(r.changeKind==="hot"?"\u6691\u3059\u304e\u307e\u3059":"\u5bd2\u3059\u304e\u307e\u3059")+'</strong><br>'+esc(r.change)+'</div>'; }
+    h += '<div class="stack" aria-label="\u4e0b\u304b\u3089\u9806\u306b\u7740\u305b\u308b\u3082\u306e">';
+    r.wear.forEach(function(w,i){
+      var tag = (i===0 && r.added) ? '<small>\u6708\u9f62\u5206 +1\u679a</small>' : (i===0 ? '<small>\u808c\u306b\u76f4\u63a5</small>' : '');
+      h += '<div class="layer l'+Math.min(i,3)+'"><span>'+esc(w)+'</span>'+tag+'</div>';
+    });
+    if(r.topLabel){ h += '<div class="layer top-layer"><span>'+esc(r.topLabel)+'</span><small>\u4e00\u756a\u4e0a</small></div>'; }
+    h += '</div>';
+    r.notes.forEach(function(n){ h += '<div class="note">'+esc(n)+'</div>'; });
+  }
+  h += '<div class="check"><p><strong>\u5bdd\u304b\u305b\u305f\u3089\u78ba\u8a8d</strong>\u3000\u80f8\u304b\u9996\u306e\u5f8c\u308d\u3092\u89e6\u3063\u3066\u3001\u6c57\u3070\u3093\u3067\u3044\u305f\u30891\u679a\u6e1b\u3089\u3057\u307e\u3059\u3002\u624b\u8db3\u304c\u51b7\u305f\u3044\u306e\u306f\u666e\u901a\u3067\u3059\u3002</p></div>';
+  h += '<p class="label">\u907f\u3051\u308b\u3082\u306e</p><ul class="avoid">'
+     + '<li>\u5e3d\u5b50\uff08\u5ba4\u5185\u3067\u306f\u5916\u3059\uff09</li>'
+     + '<li>\u30b9\u30ea\u30fc\u30d1\u30fc\u30fb\u304a\u304f\u308b\u307f\u306e\u4e0a\u306b\u639b\u3051\u5e03\u56e3\u3084\u6bdb\u5e03\u3092\u91cd\u306d\u308b\u3053\u3068</li>'
+     + '<li>\u5ba4\u5185\u3067\u306e\u624b\u888b\u30fb\u9774\u4e0b\uff08\u624b\u8db3\u3067\u71b1\u3092\u9003\u304c\u3059\u305f\u3081\uff09</li>'
+     + '<li>\u6e6f\u305f\u3093\u307d\u30fb\u96fb\u6c17\u3042\u3093\u304b\u3092\u5165\u308c\u305f\u307e\u307e\u5bdd\u304b\u305b\u308b\u3053\u3068</li></ul>';
+  h += '<p class="basis">'+r.basis.map(esc).join("<br>")+'</p>';
+  $("result").innerHTML = h;
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+}
+
+function setTemp(v){ v=Math.round(Math.min(30,Math.max(10,v))*2)/2; state.temp=v; $("temp").value=v; $("tempOut").textContent=v.toFixed(1); render(); }
+$("temp").addEventListener("input", function(e){ setTemp(parseFloat(e.target.value)); });
+$("tMinus").addEventListener("click", function(){ setTemp(state.temp-0.5); });
+$("tPlus").addEventListener("click", function(){ setTemp(state.temp+0.5); });
+$("ageMinus").addEventListener("click", function(){ state.age=Math.max(0,state.age-1); $("ageOut").textContent=ageLabel(state.age); render(); });
+$("agePlus").addEventListener("click", function(){ state.age=Math.min(24,state.age+1); $("ageOut").textContent=ageLabel(state.age); render(); });
+document.querySelectorAll('input[name=roll]').forEach(function(el){ el.addEventListener("change", function(){ state.roll = el.value==="yes"; render(); }); });
+document.querySelectorAll('input[name=top]').forEach(function(el){ el.addEventListener("change", function(){ state.top = el.value; render(); }); });
+document.querySelectorAll('input[name=mat]').forEach(function(el){ el.addEventListener("change", function(){ state.mat = el.value; render(); }); });
+
+syncInputs();
+render();
+</script>
+</body>
+</html>
